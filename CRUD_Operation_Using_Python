@@ -1,0 +1,51 @@
+import sqlite3
+conn = sqlite3.connect('task.db')
+#creating table
+conn.execute('''CREATE TABLE CONTACTDIARY
+         (FIRSTNAME        TEXT    NOT NULL,
+         LASTNAME        TEXT    NOT NULL,
+         GENDER            CHAR(20)     NOT NULL,
+         ADDRESS        CHAR(50) NOT NULL,
+         CONTACTDETAILS      INT     NOT NULL);''')
+print ("Table created successfully");
+
+#adding contacts
+conn.execute("INSERT INTO CONTACTDIARY (FIRSTNAME, LASTNAME, GENDER, ADDRESS, CONTACTDETAILS) \
+      VALUES ('Raghav', 'Chhabra', 'Male', 'California', 7367458925)");
+conn.execute("INSERT INTO CONTACTDIARY (FIRSTNAME, LASTNAME, GENDER, ADDRESS, CONTACTDETAILS) \
+      VALUES ('Parth', 'Gupta', 'Male', 'Texas', 8923436683 )");
+conn.execute("INSERT INTO CONTACTDIARY (FIRSTNAME, LASTNAME, GENDER, ADDRESS, CONTACTDETAILS) \
+      VALUES ('Isha', 'Sinha', 'Female', 'London', 2738938373 )");
+conn.execute("INSERT INTO CONTACTDIARY (FIRSTNAME, LASTNAME, GENDER, ADDRESS, CONTACTDETAILS) \
+      VALUES ('Radhika', 'Sabarwal', 'Female', 'Australia', 3647927436 )");  
+conn.commit()
+#listing contacts
+curser = conn.execute("SELECT FIRSTNAME, LASTNAME, GENDER, ADDRESS, CONTACTDETAILS from CONTACTDIARY")
+for row in curser:
+   print("FirstName =", row[0]);
+   print("LastName = ", row[1]);
+   print("Gender = ", row[2]);
+   print("Address = ", row[3]); 
+   print("ContactDetails", row[4]);"/n"
+print("Success");
+#updating contacts
+conn.execute("UPDATE CONTACTDIARY set CONTACTDETAILS = 8366477462 where FIRSTNAME = 'Radhika' ")
+curser = conn.execute("SELECT FIRSTNAME, LASTNAME, GENDER, ADDRESS, CONTACTDETAILS from CONTACTDIARY")
+for row in curser:
+   print("FirstName =", row[0]);
+   print("LastName = ", row[1]);
+   print("Gender = ", row[2]);
+   print("Address = ", row[3]); 
+   print("ContactDetails", row[4]);"/n"
+print("Success");
+#deleting contacts
+conn.execute("DELETE from CONTACTDIARY where FIRSTNAME = 'Parth';")
+curser = conn.execute("SELECT FIRSTNAME, LASTNAME, GENDER, ADDRESS, CONTACTDETAILS from CONTACTDIARY")
+for row in curser:
+   print("FirstName =", row[0]);
+   print("LastName = ", row[1]);
+   print("Gender = ", row[2]);
+   print("Address = ", row[3]); 
+   print("ContactDetails", row[4]);"/n"
+print("Success");
+conn.close()
